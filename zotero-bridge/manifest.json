@@ -1,0 +1,14 @@
+{
+  "manifest_version": 2,
+  "name": "PaperFlow Bridge",
+  "version": "2.1.0",
+  "description": "Open or generate a PaperFlow literature note in your Obsidian vault.",
+  "author": "PaperFlow contributors",
+  "applications": {
+    "zotero": {
+      "id": "paperflow-bridge@paperflow.local",
+      "strict_min_version": "8.0",
+      "strict_max_version": "10.*"
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "id": "paperflow",
+  "name": "PaperFlow",
+  "version": "2.1.0",
+  "minAppVersion": "1.5.0",
+  "description": "Paper reading notes with detailed methods, visual results and linked literature.",
+  "author": "PaperFlow",
+  "isDesktopOnly": true
+}
