@@ -74,7 +74,7 @@ module.exports = class PaperFlow extends Plugin {
     return new Promise((resolve, reject) => {
       const base = this.base();
       const python = this.settings.pythonPath || inside(base, '.paperflow/venv/bin/python');
-      execFile(python, [inside(base, '.paperflow/' + name), ...args], { timeout: 1300000, maxBuffer: 8 * 1024 * 1024, env: { ...process.env, ...(this.settings.zoteroDataDir ? { PAPERFLOW_ZOTERO_DIR: this.settings.zoteroDataDir } : {}), PATH: '/opt/homebrew/bin:/usr/local/bin:' + (process.env.PATH || '') } }, (err, stdout, stderr) => {
+      execFile(python, [inside(base, '.paperflow/' + name), ...args], { timeout: 3000000, maxBuffer: 8 * 1024 * 1024, env: { ...process.env, ...(this.settings.zoteroDataDir ? { PAPERFLOW_ZOTERO_DIR: this.settings.zoteroDataDir } : {}), PATH: '/opt/homebrew/bin:/usr/local/bin:' + (process.env.PATH || '') } }, (err, stdout, stderr) => {
         if (err) reject(new Error((stderr || err.message).slice(-1200))); else resolve(stdout);
       });
     });
@@ -149,7 +149,7 @@ class Settings extends PluginSettingTab {
     for (const [key, name] of [['outputFolder', '论文目录'], ['templatePath', '笔记模板'], ['pythonPath', 'Python 路径（留空使用独立环境）'], ['zoteroDataDir', 'Zotero 数据目录（留空使用 ~/Zotero）']]) {
       new Setting(el).setName(name).addText(t => t.setValue(this.plugin.settings[key]).onChange(async v => { this.plugin.settings[key] = v.trim(); await this.plugin.saveData(this.plugin.settings); }));
     }
-    el.createEl('p', { text: '模型与 API key 保留在本地 .paperflow/config.json；Git 忽略不等于云同步排除。原文、书目及已有笔记的标题/summary 属性发送至所配置的模型服务；“我的阅读记录”正文不发送。' });
+    el.createEl('p', { text: '在 .paperflow/config.json 选择 API 或本机 Codex CLI。Codex 模式复用本机登录；API 模式使用本地密钥。原文、书目和论文标题/summary 发给所选模型，“我的阅读记录”正文不发送。' });
     new Setting(el).setName('使用说明').addButton(b => b.setButtonText('打开').onClick(() => this.app.workspace.openLinkText('System/PaperFlow Guide', '', false)));
   }
 }

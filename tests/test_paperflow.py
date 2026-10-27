@@ -110,7 +110,7 @@ class PaperFlowTests(unittest.TestCase):
                 meta={'zotero_key':'ABCD1234','title':'Test'}
                 info={'source_type':'fulltext','pdf_sha256':'abc'}
                 for name,obj in [('meta',meta),('pages',pages),('info',info)]:pf.save(w/(name+'.json'),obj)
-                cache=hashlib.sha256(json.dumps({'source':'abc','model':'test','version':pf.VERSION},sort_keys=True).encode()).hexdigest()
+                cache=hashlib.sha256(json.dumps({'source':'abc','model':'test','transport':'openai-compatible','version':pf.VERSION},sort_keys=True).encode()).hexdigest()
                 pf.save(w/'evidence.json',{'cache_key':cache,'evidence':evidence})
                 template=v/'template.md';template.write_text('template')
                 def rendering(*args):

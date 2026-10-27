@@ -8,6 +8,10 @@
 
 ## 笔记怎样组织
 
+原文出处和自测答案用 Obsidian 原生可折叠 callout；点击标题展开。正文禁止防御性套话、重复提醒和无信息填充；具体局限集中说明依据与影响。发布前检查 HTML、围栏、表格列数与引用，格式不合格的内容不会写成新笔记。
+
+模型在 `.paperflow/config.json` 选择 `openai-compatible` 或 `codex-cli` transport。Codex 模式复用本机登录和基础配置的模型，不需要 PaperFlow API key；配置见 README。更新只影响以后生成，旧笔记仍直接打开。
+
 显示标题是“方法名｜研究主题”，保留英文论文题名和书目信息。正文依次展开背景与任务、核心洞见、方法模块、实验表格、已有论文关系、批判性分析、结论和自测。模板文件在 `.obsidian/paperflow/templates/paper-summary.md`，可调整三级标题和写作提示；当前后端校验要求保留八个二级章节。
 
 点击 `Zotero` 跳到父条目；点击 `p.N` 或图表出处跳到 PDF **物理第 N 页**，可能与期刊印刷页码不同。原文图默认是方法、结果和消融相关页的整页图，不保证自动定位到最佳图表。要精确裁剪，可配置 `.paperflow/figure-regions.json`：

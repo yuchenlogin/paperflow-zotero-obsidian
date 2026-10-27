@@ -7,6 +7,8 @@ description: Search a local Zotero personal library by title and generate detail
 
 Use the existing local backend rather than replacing its note format with a new summary. Requires PaperFlow's Obsidian plugin, Python environment, model configuration, Poppler and a local Zotero personal library to be installed. If absent, use the repository README installation instructions; this skill alone does not install the application.
 
+Model transport may be `openai-compatible` or `codex-cli`; the latter reuses native Codex login and the base model configuration without copying credentials. Prohibit defensive writing, filler and repetitive cautions; explain concrete limitations with evidence and consequences. New notes use native Obsidian foldable callouts, never HTML details/summary. Check actual rendering when output structure changes. Upgrading must not rewrite existing notes.
+
 Determine the target vault from the user's context. Use its `.paperflow/venv/bin/python` (or the plugin's configured Python) for the bundled `scripts/run.py`:
 
 ```sh

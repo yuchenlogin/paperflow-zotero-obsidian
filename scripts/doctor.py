@@ -17,7 +17,7 @@ def check(vault):
         record('dependency '+module,importlib.util.find_spec(module) is not None)
     for executable in ('pdftotext','pdftoppm','curl'):
         record('executable '+executable,shutil.which(executable))
-    for name in ('paperflow_fetch.py','paperflow_summarize.py','paperflow_list.py','paperflow_run.py'):
+    for name in ('paperflow_fetch.py','paperflow_summarize.py','paperflow_list.py','paperflow_run.py','paperflow_codex.py','paperflow_markdown.py'):
         record('backend '+name,(vault/'.paperflow'/name).is_file())
     plugin=vault/'.obsidian/plugins/paperflow'
     record('Obsidian plugin',(plugin/'main.js').is_file() and (plugin/'manifest.json').is_file())
@@ -27,9 +27,20 @@ def check(vault):
     record('Zotero database exists',db.is_file())
     cfg_path=Path(os.environ.get('PAPERFLOW_CONFIG') or vault/'.paperflow/config.json')
     cfg=json.loads(cfg_path.read_text()) if cfg_path.exists() else {}
-    for key in ('base_url','model','api_key'):
-        value=os.environ.get('PAPERFLOW_'+key.upper()) or cfg.get(key,'')
-        record('configured '+key,value and 'REPLACE_WITH_' not in value and 'api.example.com' not in value)
+    transport=os.environ.get('PAPERFLOW_TRANSPORT') or cfg.get('transport','openai-compatible')
+    record('supported transport',transport in ('codex-cli','openai-compatible'))
+    if transport=='codex-cli':
+        sys.path.insert(0,str(vault/'.paperflow'))
+        try:
+            from paperflow_codex import resolve
+            resolved=resolve(cfg)
+            record('Codex CLI and current model configured',bool(resolved['model']))
+        except (ValueError,OSError,ImportError):
+            record('Codex CLI and current model configured',False)
+    else:
+        for key in ('base_url','model','api_key'):
+            value=os.environ.get('PAPERFLOW_'+key.upper()) or cfg.get(key,'')
+            record('configured '+key,value and 'REPLACE_WITH_' not in value and 'api.example.com' not in value)
     enabled=vault/'.obsidian/community-plugins.json'
     record('PaperFlow enabled in Obsidian',enabled.exists() and 'paperflow' in json.loads(enabled.read_text()))
     print(json.dumps(results,ensure_ascii=False,indent=2))

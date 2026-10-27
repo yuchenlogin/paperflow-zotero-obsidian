@@ -22,7 +22,7 @@ def main():
     env=dict(os.environ)
     if settings.get('zoteroDataDir'): env['PAPERFLOW_ZOTERO_DIR']=settings['zoteroDataDir']
     def run(name, arguments):
-        return subprocess.check_output([python,str(vault/'.paperflow'/name),*map(str,arguments)],env=env,text=True,timeout=1300)
+        return subprocess.check_output([python,str(vault/'.paperflow'/name),*map(str,arguments)],env=env,text=True,timeout=3100)
     if args.query is not None:
         items=json.loads(run('paperflow_list.py',[]))
         print(json.dumps([x for x in items if args.query.casefold() in x['title'].casefold()],ensure_ascii=False,indent=2))

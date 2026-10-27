@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "PaperFlow Bridge",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "Open or generate a PaperFlow literature note in your Obsidian vault.",
   "author": "PaperFlow contributors",
   "applications": {

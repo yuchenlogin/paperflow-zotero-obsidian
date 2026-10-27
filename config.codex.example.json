@@ -1,0 +1,5 @@
+{
+  "transport": "codex-cli",
+  "codex_path": "codex",
+  "codex_timeout": 600
+}

@@ -8,12 +8,12 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 
 def release_files():
-    paths = '''README.md LICENSE CHANGELOG.md .gitignore requirements.txt config.example.json
-backend/paperflow_fetch.py backend/paperflow_list.py backend/paperflow_summarize.py backend/paperflow_run.py
+    paths = '''README.md LICENSE CHANGELOG.md .gitignore requirements.txt config.example.json config.codex.example.json
+backend/paperflow_fetch.py backend/paperflow_list.py backend/paperflow_summarize.py backend/paperflow_run.py backend/paperflow_codex.py backend/paperflow_markdown.py
 obsidian-plugin/main.js obsidian-plugin/manifest.json templates/paper-summary.md
 scripts/install.py scripts/doctor.py scripts/build.py
 skills/paperflow/SKILL.md skills/paperflow/scripts/run.py
-tests/test_paperflow.py tests/test_portable.py tests/test_plugin.js
+tests/test_paperflow.py tests/test_portable.py tests/test_codex_markdown.py tests/test_codex_native.py tests/test_plugin.js
 docs/usage.md docs/architecture.md
 .github/workflows/test.yml zotero-bridge/manifest.json zotero-bridge/bootstrap.js'''.split()
     return [ROOT/p for p in sorted(paths)]
