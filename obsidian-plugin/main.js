@@ -73,7 +73,10 @@ module.exports = class PaperFlow extends Plugin {
   script(name, args) {
     return new Promise((resolve, reject) => {
       const base = this.base();
-      const python = this.settings.pythonPath || inside(base, '.paperflow/venv/bin/python');
+      // A venv interpreter normally links outside the vault. Keep its invocation
+      // path so Python locates pyvenv.cfg; constrain its directory, not that link.
+      if (!this.settings.pythonPath) inside(base, '.paperflow/venv/bin');
+      const python = this.settings.pythonPath || path.join(base, '.paperflow/venv/bin/python');
       execFile(python, [inside(base, '.paperflow/' + name), ...args], { timeout: 3000000, maxBuffer: 8 * 1024 * 1024, env: { ...process.env, ...(this.settings.zoteroDataDir ? { PAPERFLOW_ZOTERO_DIR: this.settings.zoteroDataDir } : {}), PATH: '/opt/homebrew/bin:/usr/local/bin:' + (process.env.PATH || '') } }, (err, stdout, stderr) => {
         if (err) reject(new Error((stderr || err.message).slice(-1200))); else resolve(stdout);
       });
